@@ -1,0 +1,98 @@
+
+.text-left{
+  text-align: left;
+}
+.text-center{
+  text-align: center;
+}
+.text-right{
+  text-align: right;
+}
+
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+
+.flex-box{
+  display: flex;
+}
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-item{
+  flex:1;
+}
+
+@mixin border-1px($count:1,$color:#000,$flag:true){
+  @if($count == 1){
+    position: relative;
+    border:none;
+    &:after{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      background: $color;
+      width: if($flag,1px,100%);
+      height: if($flag,100%,1px);
+      -webkit-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+      -webkit-transform-origin: 0 0;
+      transform-origin: 0 0;
+    }
+  } @else{
+    position: relative;
+    margin-bottom: 20px;
+    border:none;
+    &:after{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      border: 1px solid $color;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      width: 200%;
+      height: 200%;
+      -webkit-transform: scale(0.5);
+      transform: scale(0.5);
+      -webkit-transform-origin: left top;
+      transform-origin: left top;
+    }
+  }
+}
+
+.border1-1px{
+  position: relative;
+  border:none;
+}
+.border1-1px:after{
+
+}
+
+.border1-4px{
+  position: relative;
+  margin-bottom: 20px;
+  border:none;
+}
+.border4-1px:after{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #000;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 200%;
+  height: 200%;
+  -webkit-transform: scale(0.5);
+  transform: scale(0.5);
+  -webkit-transform-origin: left top;
+  transform-origin: left top;
+}
+
+
+

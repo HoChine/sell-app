@@ -1,0 +1,274 @@
+.detail-header {
+  position: relative;
+  i {
+    position: absolute;
+    left: .2rem;
+  }
+}
+
+.detail-box {
+  padding: 0 .1rem;
+  dl {
+    margin-top: .1rem;
+    display: flex;
+    height: .9rem;
+    overflow: hidden;
+    .detail-img {
+      flex: 4;
+      img {
+        width: 90%;
+        height: .8rem;
+      }
+    }
+    .detail-info {
+      flex: 5;
+      h3, div {
+        width: 1.8rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      h3 {
+        margin-bottom: .05rem;
+      }
+      div {
+        color: #666;
+        line-height: .24rem;
+        font-size: .14rem;
+      }
+      .detail-discounts {
+
+      }
+    }
+
+    .detail-text {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      i {
+        font-size: .28rem;
+        color: rgba(7, 17, 27, 0.5);
+      }
+
+    }
+  }
+  .detail-wapper {
+    margin: .05rem 0;
+    height: .2rem;
+    line-height: .2rem;
+    color: #666;
+    font-size: .14rem;
+    :first-child {
+      border: 1px solid #333;
+      padding: 0 .03rem;
+      margin-right: .05rem;
+      background-color: #fff;
+    }
+    .collect {
+      float: right;
+      font-size: .2rem;
+      margin-right: .1rem;
+    }
+  }
+}
+
+.detail-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.shopping-cart {
+  position: relative;
+  height: .6rem;
+  display: flex;
+}
+.cart-list{
+  position: fixed;
+  width: 100%;
+  bottom: .6rem;
+  height: 100%;
+}
+.cart-shadow{
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+
+.cart-info {
+  flex: 3;
+  display: flex;
+}
+
+.cart-icon {
+  flex: 3;
+  line-height: .6rem;
+  text-align: center;
+  position: relative;
+  span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: .14rem;
+    height: .12rem;
+    line-height: .12rem;
+    font-size: .12rem;
+    padding: .04rem;
+    text-align: center;
+    border-radius: .15rem;
+    background-color: #FF0000;
+    color: #fff;
+  }
+  i {
+    border: 1px solid #ccc;
+    border-radius: .5rem;
+    padding: .06rem;
+    font-size: .3rem;
+  }
+}
+
+.cart-text {
+  flex: 7;
+  font-size: .14rem;
+  padding: 0 0 .1rem .1rem;
+  span {
+    color: #ff6b2a;
+    font-size: .25rem;
+  }
+}
+
+.commit-order {
+  flex: 2;
+  text-align: center;
+  line-height: .6rem;
+  font-size: .16rem;
+  background-color: #ff6b2a;
+  color: #fff;
+}
+
+.detail-nav {
+  height: .5rem;
+  line-height: .5rem;
+  text-align: center;
+  display: flex;
+  @include border-1px(1, rgba(244, 244, 244, 0.8), false);
+  &:after {
+    left: 0;
+  }
+  .goods {
+    @include border-1px(1, rgba(7, 17, 27, 0.8), 1);
+    &:after {
+      right: 0;
+      top: .12rem;
+    }
+  }
+  div {
+    flex: 1;
+  }
+}
+
+.goods-wapper {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.reviews-wapper {
+  flex: 1;
+}
+
+.goods-active {
+  color: #faa11d;
+}
+
+.goods-nav {
+  flex: 3;
+
+  li {
+    display: table;
+    background-color: rgba(244, 244, 244, 0.8);
+    width: 83%;
+    height: .4rem;
+    padding: .1rem;
+    span {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+  .goods-nav-active {
+    background-color: #fff;
+  }
+
+}
+
+.goods-main {
+  flex: 7;
+  li {
+    dl:last-child:after {
+      height: 0;
+    }
+  }
+}
+
+.food-title {
+  background-color: rgba(244, 244, 244, 0.8);
+  height: .34rem;
+  line-height: .34rem;
+  border-left: 2px solid #ccc;
+  padding-left: .2rem;
+}
+
+.food-item {
+  display: flex;
+  height: 1rem;
+  padding: .1rem .1rem 0 .1rem;
+  @include border-1px(1, rgba(7, 17, 27, 0.2), false);
+  &:after {
+    width: 92% !important;
+    left: 4%
+  }
+  dt {
+    flex: 4;
+    img {
+      width: 90%;
+      height: .9rem;
+    }
+  }
+  dd {
+    flex: 6;
+    h4 {
+      color: #111;
+      width: 1.3rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .food-price {
+      color: #faa11d;
+      line-height: .28rem;
+      font-size: .18rem;
+    }
+    .food-sellCount {
+      color: #666;
+    }
+  }
+}
+
+/*小球*/
+.ball-container {
+  .ball {
+    position: fixed; //小球动画必须脱离html布局流
+    left: 32px;
+    bottom: 22px;
+    z-index: 200;
+    transition: all 0.4s cubic-bezier(0.49, -0.29, 0.75, 0.41);
+    .inner {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgb(0, 160, 220);
+      transition: all 0.4s linear;
+    }
+  }
+}
