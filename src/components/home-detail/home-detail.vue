@@ -47,7 +47,7 @@
                   <h4>{{subItem.name}}</h4>
                   <div class="food-price">￥{{subItem.price}}</div>
                   <div class="food-sellCount">周销量{{subItem.sellCount}}</div>
-                  <Cart :name="subItem.name" :price="subItem.price" @foodsCountChange="foodsCount" @drop="drop"></Cart>
+                  <Cart :name="subItem.name" :price="subItem.price" @drop="drop"></Cart>
                 </dd>
               </dl>
             </li>
@@ -58,31 +58,38 @@
         reviews-wapper
       </div>
     </div>
-    <div class="shopping-cart">
+    <div class="shopping-cart" :class="{'empty-cart':!cart.length}">
       <div class="cart-info">
-        <div class="cart-icon" @click="toggleShowCartList">
+        <div class="cart-icon" @click="toggleShowCartList" :class="{'large-cart':largeCart}">
           <i class="iconfont icon-gouwuche"></i>
-          <span>{{foodsTotal.count}}</span>
+          <span>{{cart.length}}</span>
         </div>
-        <div class="cart-text">
-          费用合计：<span>{{foodsTotal.price}}</span>元
-          <br>
-          另需配送费{{shopDetail.sendPrice}}元
-        </div>
+        <div class="cart-text" v-html="cartInfo"></div>
       </div>
       <div class="commit-order">
         提交订单
       </div>
-      <div class="cart-list" v-show="isShowCartList">
-        <div class="cart-shadow"></div>
-        <div class="cart-list-info">
-          <div v-for="item in cartList">
-            <span>{{item.name}}</span>
-            <span>{{item.price}}</span>
-            <span>{{item.count}}</span>
+      <transition name="fade">
+        <div class="cart-list" v-show="isShowCartList && cart.length">
+          <div class="cart-shadow" @click="toggleShowCartList"></div>
+          <div class="cart-list-info">
+            <div class="cart-list-title">
+              送餐费 + 餐盒费 {{ cart.length * 2 + shopDetail.sendPrice}} 元
+              <span @click="emptyCart">
+                <i class="iconfont icon-delete8e"></i>
+                清空购物车
+              </span>
+            </div>
+            <div class="cart-list-text" v-for="(item,key) in cartList" v-if="item.count">
+              <span>{{key}}</span>
+              <span>{{item.price}}元 </span>
+              <span v-show="item.count">
+                <Cart :name="key" :price="item.price" :flag="true"></Cart>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      </transition>
       <div class="ball-container">
         <div v-for="ball in balls">
           <transition name="drop" @before-enter="beforeDrop" @enter="dropping" @after-enter="afterDrop">
@@ -99,6 +106,7 @@
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
   import Cart from '../cart/cart.vue'
+  import { mapState } from 'vuex'
   export default {
     name: 'shop-detail',
     data () {
@@ -132,7 +140,8 @@
           {show: false}
         ],
         dropBalls: [],
-        isShowCartList: false
+        isShowCartList: false,
+        largeCart: false
       }
     },
     create () {
@@ -154,24 +163,6 @@
       this.$store.commit('changeNavState', true)
     },
     methods: {
-      foodsCount (food) {
-        this.cartList[food.name] = {
-          name: food.name,
-          price: food.price,
-          count: food.count
-        };
-        this.calcFoods();
-      },
-      calcFoods () {
-        let count = 0;
-        let price = 0;
-        for (var t in this.cartList) {
-          count += this.cartList[t].count;
-          price += this.cartList[t].count * this.cartList[t].price;
-        }
-        this.foodsTotal.count = count;
-        this.foodsTotal.price = price;
-      },
       getShopDetail () {
         this.$axios.post('/api/getShopDetail').then((data) => {
           console.log(data.data);
@@ -207,7 +198,8 @@
       },
       foodsMenu (index) {
         let li = this.$refs.rightscrollhook.getElementsByTagName('li');
-        let el = li[index]
+        let el = li[index];
+        console.log(el);
         this.rightScroll.scrollToElement(el, 300)
       },
       drop (el) {
@@ -259,9 +251,19 @@
           ball.show = false;
           el.style.display = 'none'; // 隐藏小球
         }
+        this.largeCart = true;
+        setTimeout(() => {
+          this.largeCart = false
+        }, 300)
       },
       toggleShowCartList () {
         this.isShowCartList = !this.isShowCartList;
+        this.cartList = this.cart;
+        this.$root.eventHub.$emit('updateCart');
+      },
+      emptyCart () {
+        this.$store.commit('emptyCart');
+        this.toggleShowCartList();
       }
     },
     components: {
@@ -277,13 +279,23 @@
           }
         }
         return 0
-      }
+      },
+      cartInfo () {
+        if (this.cart.length) {
+          return '费用合计：<span>' + this.cart.price + '</span>元 <br> 另需配送、餐盒费' + (this.cart.length * 2 + this.shopDetail.sendPrice) + '元'
+        } else {
+          return '<b>购物车中空空如也~</b>'
+        }
+      },
+      ...mapState([
+        'cart'
+      ])
     }
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
+<style lang="scss">
   @import "../../assets/scss/common.scss";
   @import "home-detail.scss";
 </style>

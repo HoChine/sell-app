@@ -14,6 +14,9 @@ require('./mock')
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  data: {
+    eventHub: new Vue()
+  },
   router,
   store,
   template: '<App/>',

@@ -9,7 +9,7 @@
       <span>订单</span>
     </router-link>
     <router-link class="flex-item" to='/mine'>
-      <i class="iconfont icon-mine"></i>
+      <i class="iconfont icon-mine-red"></i>
       <span>我的</span>
     </router-link>
   </div>

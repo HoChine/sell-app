@@ -1,73 +1,80 @@
 <template>
   <div class="cart">
-    <a href="javascript:;;" class="minus" v-show="isShow" @click="minus">-</a>
-    <span class="text" v-show="isShow">{{count}}</span>
-    <a href="javascript:;;" class="plus" @click="plus" ref="pos">+</a>
+    <a href="javascript:;;" class="minus" v-show="number" @click="handler('-')">-</a>
+    <span class="text" v-show="number">{{number}}</span>
+    <a href="javascript:;;" class="plus" @click="handler('+')" ref="pos">+</a>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import { mapState } from 'vuex'
   export default {
     name: 'cart',
     data () {
       return {
-        isShow: false,
-        count: 0
+        number: 0
       }
     },
     create () {
 
     },
     mounted () {
-
+      if (!this.flag) {
+        this.$store.commit('addFood', this.name);
+      } else {
+        this.number = this.cart[this.name].count;
+      }
+      this.$root.eventHub.$on('updateCart', () => {
+        this.number = this.cart[this.name].count;
+      });
     },
     methods: {
-      plus () {
-        this.isShow = true;
-        this.count ++;
-        this.$emit('foodsCountChange', {
-          count: this.count,
-          name: this.name,
-          price: this.price
-        });
-        this.$emit('drop', this.$refs.pos)
-      },
-      minus () {
-        this.count --;
-        if (this.count <= 0) {
-          this.isShow = false;
-          this.count = 0;
+      handler (flag) {
+        if (flag === '+') {
+          this.$emit('drop', this.$refs.pos)
         }
-        this.$emit('foodsCountChange', {
-          count: this.count,
+        this.$store.commit('changeCart', {
+          count: this.cart[this.name].count,
+          price: this.price,
           name: this.name,
-          price: this.price
-        });
+          flag: flag
+        })
+        this.calcNumber();
+      },
+      calcNumber () {
+        this.number = this.cart[this.name].count;
       }
     },
     components: {},
-    computed: {},
-    props: ['name', 'price']
+    computed: {
+      ...mapState([
+        'cart'
+      ])
+    },
+    props: ['name', 'price', 'flag']
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-  .cart{
+  .cart {
     float: right;
   }
-  .cart a{
+
+  .cart a {
     display: inline-block;
-    width: .12rem;
-    line-height: .12rem;
+    text-decoration: none;
+    width: .15rem;
+    line-height: .15rem;
     text-align: center;
     border: 1px solid #ccc;
     border-radius: .3rem;
     padding: .02rem;
-    height: .12rem;
+    height: .15rem;
     background: none;
     outline: none;
   }
+
   .cart .minus {
     color: #ccc;
   }
@@ -77,7 +84,8 @@
     width: .2rem;
     color: #333;
   }
-  .cart .plus{
+
+  .cart .plus {
     border-color: #ff3;
     background-color: #ff3;
   }
