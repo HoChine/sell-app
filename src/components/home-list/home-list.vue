@@ -44,6 +44,9 @@
     mounted () {
       this.getShopList()
     },
+    activated () {
+      this.$store.commit('changeNavState', true)
+    },
     methods: {
       getShopList () {
         this.$axios.post('/api/getShop').then((data) => {
@@ -86,44 +89,54 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
   @import "../../assets/scss/common.scss";
+
   .bm-view {
     flex: 1;
     display: block;
   }
-  .home-list{
-    flex:1;
+
+  .home-list {
+    flex: 1;
   }
+
   .shop-list {
     flex: 1;
     display: flex;
     flex-direction: column;
-  img{
+
+  img {
     width: 100%;
   }
+
   }
   .map-err {
     background-size: 100%;
   }
-  .shop-title{
+
+  .shop-title {
     display: flex;
     height: .34rem;
     line-height: .34rem;
     padding: 0 .2rem;
   }
-  .title-line{
+
+  .title-line {
     flex: 1;
     top: -.16rem;
-    @include border-1px(1,rgba(7,17,27,0.8));
+  @include border-1px(1, rgba(7, 17, 27, 0.8));
 
   }
-  .title-text{
+
+  .title-text {
     font-size: .14rem;
     padding: 0 .2rem;
   }
-  .shop-scroll{
+
+  .shop-scroll {
     flex: 1;
   }
-  .shop-swiper{
+
+  .shop-swiper {
     height: 2rem;
     width: 100%;
   }

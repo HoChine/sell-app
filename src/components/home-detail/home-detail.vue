@@ -47,7 +47,7 @@
                   <h4>{{subItem.name}}</h4>
                   <div class="food-price">￥{{subItem.price}}</div>
                   <div class="food-sellCount">周销量{{subItem.sellCount}}</div>
-                  <Cart :name="subItem.name" :price="subItem.price" @drop="drop"></Cart>
+                  <Cart :name="subItem.name" :price="subItem.price" :shopId="shopId" @drop="drop"></Cart>
                 </dd>
               </dl>
             </li>
@@ -66,7 +66,7 @@
         </div>
         <div class="cart-text" v-html="cartInfo"></div>
       </div>
-      <div class="commit-order">
+      <div class="commit-order" @click="commitOrder">
         提交订单
       </div>
       <transition name="fade">
@@ -149,18 +149,20 @@
     },
     mounted () {
       this.$nextTick(() => {
+        this.shopId = this.$route.query.shopId;
+        this.$store.commit('changeCartId', this.shopId);
+        this.$store.commit('changeNavState', false)
+        this.getShopDetail();
         this.initScroll()
       })
     },
-    activated () {
-      this.$nextTick(() => {
-        this.getShopDetail();
-        this.shopId = this.$route.query.shopId;
-        this.$store.commit('changeNavState', false)
-      })
-    },
+//    activated () {
+//      this.$nextTick(() => {
+//
+//      })
+//    },
     deactivated () {
-      this.$store.commit('changeNavState', true)
+      //  this.$store.commit('changeNavState', true)
     },
     methods: {
       getShopDetail () {
@@ -199,7 +201,6 @@
       foodsMenu (index) {
         let li = this.$refs.rightscrollhook.getElementsByTagName('li');
         let el = li[index];
-        console.log(el);
         this.rightScroll.scrollToElement(el, 300)
       },
       drop (el) {
@@ -264,6 +265,20 @@
       emptyCart () {
         this.$store.commit('emptyCart');
         this.toggleShowCartList();
+      },
+      commitOrder () {
+        if (this.cart.length <= 0) {
+          return;
+        }
+        console.log(this.cart);
+        this.$router.push({
+          path: '/home/confirmOrder',
+          query: {
+            cart: this.cart,
+            shopId: this.shopId,
+            sendPrice: this.shopDetail.sendPrice
+          }
+        })
       }
     },
     components: {

@@ -5,6 +5,7 @@ import Order from '@/components/order/order'
 import Mine from '@/components/mine/mine'
 import HomeDetail from '@/components/home-detail/home-detail'
 import HomeList from '@/components/home-list/home-list'
+import confirmOrder from '@/components/confirm-order/confirm-order'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
           path: '/home/HomeDetail',
           name: 'HomeDetail',
           component: HomeDetail
+        },
+        {
+          path: '/home/confirmOrder',
+          name: 'confirmOrder',
+          component: confirmOrder
         }
       ]
     },

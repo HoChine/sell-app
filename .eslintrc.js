@@ -21,6 +21,7 @@ module.exports = {
     'semi': 0,
     // allow paren-less arrow functions
     'arrow-parens': 0,
+    "indent": ["error", 2],
     // allow async-await
     'generator-star-spacing': 0,
     // allow debugger during development

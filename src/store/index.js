@@ -7,7 +7,8 @@ const store = new Vuex.Store({
     isShowNav: true,
     cart: {
       length: 0,
-      price: 0
+      price: 0,
+      id: 0
     }
   },
   actions: {},
@@ -47,6 +48,16 @@ const store = new Vuex.Store({
           }
         }
       }
+    },
+    changeCartId (state, shopId) {
+      if (shopId !== state.cart.id) {
+        state.cart = {
+          length: 0,
+          price: 0,
+          id: shopId
+        }
+      }
+      console.log(state.cart);
     }
   },
   getters: {},

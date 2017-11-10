@@ -16,7 +16,6 @@
       }
     },
     create () {
-
     },
     mounted () {
       if (!this.flag) {
@@ -51,7 +50,7 @@
         'cart'
       ])
     },
-    props: ['name', 'price', 'flag']
+    props: ['name', 'price', 'flag', 'shopId']
   }
 </script>
 
