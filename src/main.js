@@ -5,12 +5,13 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import store from './store'
+import 'lib-flexible'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
+
 /* 引入mockjs */
 require('./mock')
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

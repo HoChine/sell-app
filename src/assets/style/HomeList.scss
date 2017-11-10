@@ -1,0 +1,64 @@
+.HomeList {
+    display: flex;
+    flex-direction: column;
+}
+
+.home-header {
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    font-size: 36px;
+}
+
+.bm-view {
+    flex: 1;
+    display: block;
+}
+
+.shop-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-swiper {
+    height: 400px;
+    overflow: hidden;
+}
+
+.shop-title {
+    display: flex;
+    height: 80px;
+    line-height: 80px;
+    font-size: 36px;
+    text-align: center;
+    div {
+        flex: 1;
+    }
+    .title-line {
+        position: relative;
+
+        &:after {
+            position: absolute;
+            top: 50%;
+            content: "";
+            height: 1px;
+            width: 80%;
+            background-color: #000;
+        }
+        &:first-child {
+            &:after {
+                left: 20%;
+            }
+        }
+        &:last-child {
+            &:after {
+                right: 20%;
+            }
+        }
+    }
+}
+
+.shop-scroll {
+    flex: 1
+}

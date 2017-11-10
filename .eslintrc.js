@@ -17,11 +17,10 @@ module.exports = {
   ],
   // add your custom rules here
   'rules': {
-    // 末尾加分号
-    'semi': 0,
     // allow paren-less arrow functions
+    'indent': 0,
+    'semi': 0,
     'arrow-parens': 0,
-    "indent": ["error", 2],
     // allow async-await
     'generator-star-spacing': 0,
     // allow debugger during development
