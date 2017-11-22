@@ -1,7 +1,6 @@
 <template>
     <div class="Mine">
         Minetest
-        111
     </div>
 </template>
 
