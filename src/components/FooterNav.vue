@@ -18,14 +18,15 @@
 <script type="text/ecmascript-6">
     export default {
         name: 'footer-nav',
-        data () {
+        data() {
             return {}
         },
         create () {
+        create() {
 
         },
-        mounted () {
-
+        mounted() {
+            console.log(111);
         },
         methods: {},
         components: {},
