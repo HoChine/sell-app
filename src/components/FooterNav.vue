@@ -21,9 +21,7 @@
         data() {
             return {}
         },
-        create () {
         create() {
-
         },
         mounted() {
             console.log(111);

@@ -1,6 +1,6 @@
 <template>
     <div class="Mine">
-        Mine
+        Minetest
     </div>
 </template>
 
@@ -11,10 +11,8 @@
             return {}
         },
         create () {
-
         },
         mounted () {
-
         },
         methods: {},
         components: {},
